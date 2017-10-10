@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5bab4af1-ae7a-44de-8eb2-5c63ec1e5193" name="Default" comment="created basic movement">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/Main.java" afterPath="$PROJECT_DIR$/src/gui/Main.java" />
-    </list>
+    <list default="true" id="5bab4af1-ae7a-44de-8eb2-5c63ec1e5193" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path=".idea/dataSources.local.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -686,7 +683,7 @@
       <option name="presentableId" value="Default" />
       <updated>1507653468084</updated>
       <workItem from="1507653470802" duration="845000" />
-      <workItem from="1507658728374" duration="6401000" />
+      <workItem from="1507658728374" duration="6426000" />
     </task>
     <task id="LOCAL-00001" summary="Created classes Game and Main">
       <created>1507659064081</created>
@@ -702,11 +699,18 @@
       <option name="project" value="LOCAL" />
       <updated>1507662723901</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="created basic movement">
+      <created>1507665137959</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1507665137959</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7246000" />
+    <option name="totallyTimeSpent" value="7271000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
