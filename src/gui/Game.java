@@ -1,5 +1,9 @@
 package gui;
 
+import BL.KeyInput;
+import BL.Player;
+import handler.Handler;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -12,45 +16,29 @@ public class Game extends Canvas implements Runnable{
 
     private boolean isRunning=false;
     private Thread thread;
-    private double xCoord;
-    private double yCoord;
-    private double xAdd;
-    private double yAdd;
-    private int degree;
+    private Handler handler;
     private int frameHeight;
     private int frameWidth;
+
+
+
     public Game(){
         frameHeight = 600;
         frameWidth = 600;
+
         new Main(frameWidth,frameHeight,"Fuck Orsch",this);
-        xCoord= 200;
-        yCoord=200;
-        this.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                super.keyPressed(e);
-                if(e.getKeyCode()==39)
-                {
-                    degree += 5;
-                    if(degree > 360)
-                    {
-                        degree = 0;
-                    }
-                }else if(e.getKeyCode()==37)
-                {
-                    degree -= 5;
-                    if(degree < 1 )
-                    {
-                        degree = 360;
-                    }
-                }
-            }
 
+        this.handler = new Handler();
 
-        });
+        this.addKeyListener(new KeyInput(handler));
+
+        handler.setPlayer( new Player(frameWidth, frameHeight,handler, 200,200));
 
         start();
     }
+
+
+
 
     private void start(){
         isRunning = true;
@@ -112,27 +100,25 @@ public class Game extends Canvas implements Runnable{
         }
         this.setBackground(Color.BLACK);
         Graphics g = bs.getDrawGraphics();
-        g.setColor(Color.red);
 
-        if(xAdd < 0 && xCoord < -10) { xCoord = frameWidth -10; }
-        if(xAdd > 0 && xCoord > frameWidth -10) { xCoord = -10; }
-        if(yAdd < 0 && yCoord < -10) { yCoord = frameHeight -10; }
-        if(yAdd > 0 && yCoord > frameHeight -10) { yCoord = -10; }
+         handler.render(g);
 
-        xAdd = Math.cos(Math.toRadians(degree));
-        yAdd = Math.sin(Math.toRadians(degree));
-        xCoord += xAdd;
-        yCoord += yAdd;
-        g.fillOval((int)xCoord, (int)yCoord, 20, 20);
+
         g.dispose();
         bs.show();
     }
 
     private void tick() {
-        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        handler.tick();
     }
+
     public static void main(String[] args) {
         new Game();
     }
+
+
+
+
+
 }
 
