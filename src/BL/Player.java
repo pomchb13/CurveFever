@@ -1,8 +1,12 @@
 package BL;
 
+import com.sun.java.swing.plaf.windows.WindowsTreeUI;
+import com.sun.xml.internal.bind.v2.runtime.Coordinator;
 import handler.Handler;
+import sun.awt.image.ImageWatched;
 
 import java.awt.*;
+import java.util.LinkedList;
 
 /**
  * Created by chris on 10.10.2017.
@@ -19,6 +23,8 @@ public class Player {
     private double omega;
     private Handler handler;
 
+    private LinkedList<CollidePoints> s; // Gibt den Weg an anhand von Points wo man sich bewegt hat
+
 
 
     public Player(int frameWidth, int frameHeight, Handler handler,double xCoord,double yCoord)
@@ -31,7 +37,9 @@ public class Player {
         this.omega = 1.5;
         this.xAdd=0;
         this.yAdd=0;
+        this.s = new LinkedList<>();
     }
+
 
 
     public void render(Graphics g)
@@ -44,6 +52,11 @@ public class Player {
     {
         xCoord += xAdd;
         yCoord += yAdd;
+
+        // true gibt an das man dort nicht durchfahren kann bei false wäre das loch
+        s.add(new CollidePoints(xCoord, yCoord, true));
+
+        // Liste von Playern im Handler durchgehen und die collision abfragen über den CollidePoints
 
         if(handler.isBoolRight()) {
             degree = degree + omega > 360 ? 0 : degree + omega;
@@ -60,6 +73,8 @@ public class Player {
         if(xAdd > 0 && xCoord > frameWidth -10) { xCoord = -10; }
         if(yAdd < 0 && yCoord < -10) { yCoord = frameHeight -10; }
         if(yAdd > 0 && yCoord > frameHeight -10) { yCoord = -10; }
+
+
     }
 
 
@@ -95,5 +110,13 @@ public class Player {
 
     public void setyAdd(int yAdd) {
         this.yAdd = yAdd;
+    }
+
+    public LinkedList<CollidePoints> getS() {
+        return s;
+    }
+
+    public void setS(LinkedList<CollidePoints> s) {
+        this.s = s;
     }
 }
