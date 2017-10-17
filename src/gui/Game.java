@@ -26,7 +26,7 @@ public class Game extends Canvas implements Runnable{
         frameHeight = 600;
         frameWidth = 600;
 
-        new Main(frameWidth,frameHeight,"Fuck Orsch",this);
+        // new StartUI(frameWidth,frameHeight,"Fuck Orsch",this);
 
         this.handler = new Handler();
 
