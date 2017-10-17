@@ -22,8 +22,9 @@ public class Player {
     private double degree;
     private double omega;
     private Handler handler;
+    private int sizeOfPoint;
 
-    private LinkedList<CollidePoints> s; // Gibt den Weg an anhand von Points wo man sich bewegt hat
+    private LinkedList<CollidePoints> collidePointsList; // Gibt den Weg an anhand von Points wo man sich bewegt hat
 
 
 
@@ -37,7 +38,8 @@ public class Player {
         this.omega = 1.5;
         this.xAdd=0;
         this.yAdd=0;
-        this.s = new LinkedList<>();
+        this.sizeOfPoint=20;
+        this.collidePointsList = new LinkedList<>();
     }
 
 
@@ -45,7 +47,7 @@ public class Player {
     public void render(Graphics g)
     {
         g.setColor(Color.red);
-        g.fillOval((int)xCoord, (int)yCoord, 20, 20);
+        g.fillOval((int)xCoord, (int)yCoord, sizeOfPoint, sizeOfPoint);
     }
 
     public void tick()
@@ -54,9 +56,10 @@ public class Player {
         yCoord += yAdd;
 
         // true gibt an das man dort nicht durchfahren kann bei false wäre das loch
-        s.add(new CollidePoints(xCoord, yCoord, true));
+        collidePointsList.add(new CollidePoints(xCoord, yCoord, true));
 
         // Liste von Playern im Handler durchgehen und die collision abfragen über den CollidePoints
+
 
         if(handler.isBoolRight()) {
             degree = degree + omega > 360 ? 0 : degree + omega;
@@ -68,6 +71,12 @@ public class Player {
 
         xAdd = Math.cos(Math.toRadians(degree));
         yAdd = Math.sin(Math.toRadians(degree));
+        
+
+        if(collisionAvoidence())
+        {
+
+        }
 
         if(xAdd < 0 && xCoord < -10) { xCoord = frameWidth -10; }
         if(xAdd > 0 && xCoord > frameWidth -10) { xCoord = -10; }
@@ -75,10 +84,32 @@ public class Player {
         if(yAdd > 0 && yCoord > frameHeight -10) { yCoord = -10; }
 
 
+
     }
 
 
 
+    public boolean collisionAvoidence()
+    {
+        CollidePoints head = collidePointsList.getLast();
+        Point centerPointHead= new Point((int)((head.getX()+sizeOfPoint)/2),(int)((head.getY()+sizeOfPoint)/2));
+
+
+       for(int i=0;i<collidePointsList.size()-50;i++)
+       {
+         Point p = new Point((int)((collidePointsList.get(i).getX()+sizeOfPoint)/2),(int)((collidePointsList.get(i).getY()+sizeOfPoint)/2));
+         double y = Math.abs(centerPointHead.getY()-p.getY());
+         double x = Math.abs(centerPointHead.getX()-p.getX());
+         double c = Math.sqrt(Math.pow(y,2)+Math.pow(x,2));
+         if((c-sizeOfPoint)<=0)
+         {
+             System.out.println("x --> "+x+" y--> "+y+" c-->"+c+" c-sizeOfPoint --> "+(c-sizeOfPoint));
+             return true;
+         }
+       }
+
+        return false;
+    }
 
     public double getxCoord() {
         return xCoord;
@@ -113,10 +144,10 @@ public class Player {
     }
 
     public LinkedList<CollidePoints> getS() {
-        return s;
+        return collidePointsList;
     }
 
     public void setS(LinkedList<CollidePoints> s) {
-        this.s = s;
+        this.collidePointsList = s;
     }
 }

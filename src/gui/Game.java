@@ -22,6 +22,8 @@ public class Game extends Canvas implements Runnable{
 
 
 
+
+
     public Game(){
         frameHeight = 600;
         frameWidth = 600;
