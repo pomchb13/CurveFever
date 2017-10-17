@@ -5,8 +5,6 @@ import BL.Player;
 import handler.Handler;
 
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 
 /**

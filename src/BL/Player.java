@@ -1,9 +1,6 @@
 package BL;
 
-import com.sun.java.swing.plaf.windows.WindowsTreeUI;
-import com.sun.xml.internal.bind.v2.runtime.Coordinator;
 import handler.Handler;
-import sun.awt.image.ImageWatched;
 
 import java.awt.*;
 import java.util.LinkedList;
@@ -23,6 +20,10 @@ public class Player {
     private double omega;
     private Handler handler;
     private int sizeOfPoint;
+
+    private int testCounter;
+    private Point testPoint;
+    private Point testHeadPoint;
 
     private LinkedList<CollidePoints> collidePointsList; // Gibt den Weg an anhand von Points wo man sich bewegt hat
 
@@ -47,7 +48,15 @@ public class Player {
     public void render(Graphics g)
     {
         g.setColor(Color.red);
+        if(testCounter > 50) {
+            if(collisionAvoidence()){
+                g.setColor(Color.blue);
+                //g.drawLine(testPoint.x, testPoint.y, testHeadPoint.x, testHeadPoint.y);
+            }
+
+        }
         g.fillOval((int)xCoord, (int)yCoord, sizeOfPoint, sizeOfPoint);
+        testCounter++;
     }
 
     public void tick()
@@ -92,17 +101,20 @@ public class Player {
     public boolean collisionAvoidence()
     {
         CollidePoints head = collidePointsList.getLast();
-        Point centerPointHead= new Point((int)((head.getX()+sizeOfPoint)/2),(int)((head.getY()+sizeOfPoint)/2));
+        Point centerPointHead= new Point((int)(head.getX()+(sizeOfPoint)/2),(int)(head.getY()+(sizeOfPoint)/2));
 
 
-       for(int i=0;i<collidePointsList.size()-50;i++)
+       for(int i=0;i<collidePointsList.size()-50;i+=10)
        {
-         Point p = new Point((int)((collidePointsList.get(i).getX()+sizeOfPoint)/2),(int)((collidePointsList.get(i).getY()+sizeOfPoint)/2));
+         Point p = new Point((int)((collidePointsList.get(i).getX())+sizeOfPoint/2),(int)((collidePointsList.get(i).getY())+sizeOfPoint/2));
          double y = Math.abs(centerPointHead.getY()-p.getY());
          double x = Math.abs(centerPointHead.getX()-p.getX());
          double c = Math.sqrt(Math.pow(y,2)+Math.pow(x,2));
          if((c-sizeOfPoint)<=0)
          {
+             testPoint = p;
+             testHeadPoint = centerPointHead;
+             System.out.println(p.getX() + ":" + p.getY());
              System.out.println("x --> "+x+" y--> "+y+" c-->"+c+" c-sizeOfPoint --> "+(c-sizeOfPoint));
              return true;
          }
