@@ -9,32 +9,23 @@ import java.awt.*;
  */
 public class Handler {
     private Player player;
-    private boolean boolRight=false;
-    private boolean boolLeft=false;
+    private boolean boolRight = false;
+    private boolean boolLeft = false;
 
 
-
-
-    public void render(Graphics g)
-    {
+    public void render(Graphics g) {
         player.render(g);
     }
 
 
-
-    public void tick()
-    {
+    public void tick() {
         player.tick();
     }
-
-
-
 
 
     public Player getPlayer() {
         return player;
     }
-
 
 
     public void setPlayer(Player player) {

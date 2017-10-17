@@ -10,19 +10,16 @@ import java.awt.image.BufferStrategy;
 /**
  * Created by Marco on 10.10.2017.
  */
-public class Game extends Canvas implements Runnable{
+public class Game extends Canvas implements Runnable {
 
-    private boolean isRunning=false;
+    private boolean isRunning = false;
     private Thread thread;
     private Handler handler;
     private int frameHeight;
     private int frameWidth;
 
 
-
-
-
-    public Game(){
+    public Game() {
         frameHeight = 600;
         frameWidth = 600;
 
@@ -32,21 +29,19 @@ public class Game extends Canvas implements Runnable{
 
         this.addKeyListener(new KeyInput(handler));
 
-        handler.setPlayer( new Player(frameWidth, frameHeight,handler, 200,200));
+        handler.setPlayer(new Player(frameWidth, frameHeight, handler, 200, 200));
 
         start();
     }
 
 
-
-
-    private void start(){
+    private void start() {
         isRunning = true;
         thread = new Thread(this);
         thread.start();
     }
 
-    private void stop(){
+    private void stop() {
         isRunning = false;
         try {
             thread.join();
@@ -64,21 +59,21 @@ public class Game extends Canvas implements Runnable{
         double delta = 0;
         long timer = System.currentTimeMillis();
         int frames = 0;
-        while(isRunning){
+        while (isRunning) {
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
             lastTime = now;
 
 
-            while(delta >= 1){
+            while (delta >= 1) {
                 tick();
                 // updates++;
                 delta--;
             }
             render();
             frames++;
-            if(System.currentTimeMillis() - timer > 1000){
-                timer+= 1000;
+            if (System.currentTimeMillis() - timer > 1000) {
+                timer += 1000;
                 frames = 0;
                 // updates = 0;
             }
@@ -93,15 +88,14 @@ public class Game extends Canvas implements Runnable{
 
     private void render() {
         BufferStrategy bs = this.getBufferStrategy();
-        if(bs==null)
-        {
+        if (bs == null) {
             this.createBufferStrategy(3);
             return;
         }
         this.setBackground(Color.BLACK);
         Graphics g = bs.getDrawGraphics();
 
-         handler.render(g);
+        handler.render(g);
 
 
         g.dispose();
@@ -115,9 +109,6 @@ public class Game extends Canvas implements Runnable{
     public static void main(String[] args) {
         new Game();
     }
-
-
-
 
 
 }

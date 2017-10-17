@@ -3,6 +3,7 @@ package gui;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -49,7 +50,7 @@ public class StartUI extends JFrame {
     private void initComponents() {
         //create a Container and set the layout
         Container cont = this.getContentPane();
-        cont.setLayout(new BorderLayout(5,5));
+        cont.setLayout(new BorderLayout(5, 5));
 
         //add the title to the container
         lbTitle = new JLabel("CurveFever", JLabel.CENTER);
@@ -57,7 +58,6 @@ public class StartUI extends JFrame {
         lbTitle.setForeground(Color.BLUE);
         lbTitle.setOpaque(true);
         cont.add(lbTitle, BorderLayout.NORTH);
-
 
 
         lbLeftPic = new JLabel();
@@ -70,7 +70,7 @@ public class StartUI extends JFrame {
         cont.add(lbRightPic, BorderLayout.EAST);
 
         pnButtons = new JPanel();
-        pnButtons.setLayout(new GridLayout(4,1,15,15));
+        pnButtons.setLayout(new GridLayout(4, 1, 15, 15));
 
         btStart = new JButton("Starten");
         btSettings = new JButton("Einstellungen");
@@ -84,8 +84,32 @@ public class StartUI extends JFrame {
 
         cont.add(pnButtons, BorderLayout.CENTER);
 
+        btExit.addActionListener((e) -> onExit(e));
+        btStart.addActionListener((e) -> onStartGame(e));
     }
 
+
+    public void onExit(ActionEvent event) {
+        int option = JOptionPane.showConfirmDialog(
+                this,
+                "Wirklich beenden?",
+                "Beenden",
+                JOptionPane.YES_NO_OPTION);
+        if (true) {
+            this.dispose();
+        }
+    }
+
+    public void onStartGame(ActionEvent event) {
+        JFrame frame = new JFrame("CurveFever");
+        frame.add(new Game());
+        frame.setSize(625, 800);
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(this);
+        frame.setVisible(true);
+        this.dispose();
+    }
 
     public static void main(String[] args) {
         try {
@@ -109,6 +133,6 @@ public class StartUI extends JFrame {
                 new StartUI().setVisible(true);
             }
         });
-}
+    }
 }
 
