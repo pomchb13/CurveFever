@@ -102,12 +102,14 @@ public class StartUI extends JFrame {
 
     public void onStartGame(ActionEvent event) {
         JFrame frame = new JFrame("CurveFever");
-        frame.add(new Game());
+        //frame.setLayout(new BorderLayout());
+
         frame.setSize(625, 800);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(this);
         frame.setVisible(true);
+        frame.add(new Game());
         this.dispose();
     }
 

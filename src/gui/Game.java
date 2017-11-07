@@ -20,6 +20,7 @@ public class Game extends Canvas implements Runnable {
 
 
     public Game() {
+        System.out.println("Hallo Game Konstruktor");
         frameHeight = 600;
         frameWidth = 600;
 
