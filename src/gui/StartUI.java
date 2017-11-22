@@ -86,6 +86,7 @@ public class StartUI extends JFrame {
 
         btExit.addActionListener((e) -> onExit(e));
         btStart.addActionListener((e) -> onStartGame(e));
+        System.out.println("hallo");
     }
 
 
