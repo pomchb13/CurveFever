@@ -4,6 +4,7 @@ import BL.KeyInput;
 import BL.Player;
 import handler.Handler;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
@@ -12,43 +13,87 @@ import java.awt.image.BufferStrategy;
  */
 public class Game extends Canvas implements Runnable {
 
-    private boolean isRunning = false;
-    private Thread thread;
-    private Handler handler;
-    private int frameHeight;
-    private int frameWidth;
+    // Game Handler
+    private Handler _Handler;
+    //
 
+    // Window Frame Size
+    private int _WindowHeight;
+    private int _WindowWidth;
+    //
+
+    // Current Frame
+    private GUIObject _CurrentFrame;
+    //
+
+    // Game Thread
+    private Thread  _Thread;
+    //
+
+    // Game Status
+    private GAMEENUMS _CurrentStatus;
+    //
+
+    public enum GAMEENUMS{
+        STOP(),
+        START(),
+        END();
+    }
+
+    public static void main(String[] args) {
+            new Game();
+    }
+
+
+    public void onChange(JFrame frame, GUIS gu)
+    {
+        frame.dispose();
+
+        switch (gu){
+            case GAMEGUI: _CurrentFrame = new GameGUI(_WindowWidth, _WindowHeight, "Game", this);StartGame();break;
+            case STARTGUI: _CurrentFrame = new StartGUI(_WindowWidth, _WindowHeight, "Menu", this);break;
+        }
+
+    }
 
     public Game() {
         System.out.println("Hallo Game Konstruktor");
-        frameHeight = 600;
-        frameWidth = 600;
 
-        // new StartGUI(frameWidth,frameHeight,"Fuck Orsch",this);
+        Init();
+    }
 
-        this.handler = new Handler();
+    private void Init() {
 
-        this.addKeyListener(new KeyInput(handler));
+        // Window Frame size
+        this._WindowHeight = 900;
+        this._WindowWidth = 700;
 
-        handler.setPlayer(new Player(frameWidth, frameHeight, handler, 200, 200));
+        // Handler
+        this._Handler = new Handler();
+        _Handler.setPlayer(new Player(_WindowWidth, _WindowHeight, _Handler, 200, 200));
 
-        start();
+        // GUI
+        this._CurrentFrame = new StartGUI(_WindowWidth, _WindowHeight, "Menu", this);
+
+        // Listeners
+        this.addKeyListener(new KeyInput(_Handler));
+
+        // Status
+        this._CurrentStatus = GAMEENUMS.STOP;
+
+        // Thread
+        this._Thread = new Thread(this);
     }
 
 
-    private void start() {
-        isRunning = true;
-        thread = new Thread(this);
-        thread.start();
+    private void StartGame(){
+        this._CurrentStatus = GAMEENUMS.START;
+
+        _Thread.start();
     }
 
-    private void stop() {
-        isRunning = false;
-        try {
-            thread.join();
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
-        }
+    private void StopGame() {
+        _CurrentStatus = GAMEENUMS.STOP;
     }
 
     @Override
@@ -60,11 +105,11 @@ public class Game extends Canvas implements Runnable {
         double delta = 0;
         long timer = System.currentTimeMillis();
         int frames = 0;
-        while (isRunning) {
+        while (_CurrentStatus == GAMEENUMS.START ? true : false) {
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
             lastTime = now;
-
+            System.out.println("2ffff");
 
             while (delta >= 1) {
                 tick();
@@ -84,7 +129,16 @@ public class Game extends Canvas implements Runnable {
                 e.printStackTrace();
             }
         }
-        stop();
+
+        switch (_CurrentStatus){
+            case STOP :
+                try {
+                    _Thread.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
     }
 
     private void render() {
@@ -96,7 +150,7 @@ public class Game extends Canvas implements Runnable {
         this.setBackground(Color.BLACK);
         Graphics g = bs.getDrawGraphics();
 
-        handler.render(g);
+        _Handler.render(g);
 
 
         g.dispose();
@@ -104,12 +158,9 @@ public class Game extends Canvas implements Runnable {
     }
 
     private void tick() {
-        handler.tick();
+        _Handler.tick();
     }
 
-    public static void main(String[] args) {
-        new Game();
-    }
 
 
 }

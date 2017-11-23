@@ -3,20 +3,20 @@ package gui;
 import javax.swing.*;
 import java.awt.*;
 
-public class GameGUI {
+public class GameGUI extends GUIObject{
 
-    private MainStarter _MainStarter;
+    public GameGUI(int width, int height, String title, Game game) {
+        super(width, height, title, game);
 
-    public Frame _Frame;
-
-    public GameGUI(MainStarter mainStarter){
-        System.out.println("GAME");
-        this._MainStarter = mainStarter;
-        this._Frame = new Frame();
+        Init();
     }
 
-    public void dispose(){
-        this._Frame.dispose();
+    public void Init(){
+        // Erstellt das Frame mit dem Panel und den Compoments die es besitzen soll
+
+
+        // Muss am Ende stehen
+        _Frame.setVisible(true);
     }
 
 }

@@ -13,22 +13,9 @@ import java.io.IOException;
 /**
  * Created by Marco on 10.10.2017.
  */
-public class StartGUI extends JFrame {
+public class StartGUI extends GUIObject {
 
- /*   public StartGUI(int width, int height, String title, Game game)
-    {
-        JFrame frame = new JFrame(title);
-        frame.setPreferredSize(new Dimension(width, height));
-        frame.setMaximumSize(new Dimension(width, height));
-        frame.setMinimumSize(new Dimension(width, height));
 
-        frame.add(game);
-        frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-    }
-*/
 
     private JPanel pnButtons;
     private JLabel lbTitle;
@@ -39,22 +26,17 @@ public class StartGUI extends JFrame {
     private JButton btCredits;
     private JButton btExit;
     private File file;
-    private MainStarter ms;
 
-    public StartGUI(MainStarter ms) throws HeadlessException {
-        super("CurveFever");
-        this.setVisible(true);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(700, 900);
-        this.setLocationRelativeTo(this);
-        this.ms = ms;
-        this.setTitle("CurveFever");
-        initComponents();
+    public StartGUI(int width, int height, String title, Game game) {
+        super(width, height, title, game);
+
+        Init();
     }
 
-    private void initComponents() {
+
+    private void Init() {
         //create a Container and set the layout
-        Container cont = this.getContentPane();
+        Container cont = _Frame.getContentPane();
         cont.setLayout(new BorderLayout(5, 5));
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -96,33 +78,25 @@ public class StartGUI extends JFrame {
 
         btExit.addActionListener((e) -> onExit(e));
         btStart.addActionListener((e) -> onStartGame(e));
+
+        // Muss am Ende stehen
+        _Frame.setVisible(true);
     }
 
 
     public void onExit(ActionEvent event) {
         int option = JOptionPane.showConfirmDialog(
-                this,
+                _Frame,
                 "Wirklich beenden?",
                 "Beenden",
                 JOptionPane.YES_NO_OPTION);
         if (option == 0) {
-            this.dispose();
+            _Frame.dispose();
         }
     }
 
     public void onStartGame(ActionEvent event) {
-        ms.onChange(this, GUIS.GAMEGUI);
-      /*  JFrame frame = new JFrame("CurveFever");
-        //frame.setLayout(new BorderLayout());
-
-        frame.setSize(625, 800);
-        frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(this);
-        frame.setVisible(true);
-        frame.add(new Game());
-        this.dispose();
-        */
+        _Game.onChange(_Frame, GUIS.GAMEGUI);
     }
 }
 

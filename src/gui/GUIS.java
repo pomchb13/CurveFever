@@ -2,5 +2,6 @@ package gui;
 
 public enum GUIS {
     GAMEGUI(),
-    STARTGUI();
+    STARTGUI(),
+    SETTTINGSGUI();
 }

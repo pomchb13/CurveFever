@@ -6,17 +6,15 @@ import java.awt.*;
 /**
  * Created by Ewald on 17.10.2017.
  */
-public class SettingsGUI extends JDialog {
+public class SettingsGUI extends GUIObject {
 
 
-
-    public SettingsGUI(Frame parent, boolean modal) throws HeadlessException {
-        super(parent, modal);
-        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        this.setSize(400, 400);
-        this.setLocationRelativeTo(parent);
-        this.setTitle("Einstellungen");
+    public SettingsGUI(int width, int height, String title, Game game) {
+        super(width, height, title, game);
     }
 
+    public void Init(){
+        // Erstellt das Frame mit dem Panel und den Compoments die es besitzen soll
+    }
 
 }
