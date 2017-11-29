@@ -27,31 +27,35 @@ public class Game extends Canvas implements Runnable {
     //
 
     // Game Thread
-    private Thread  _Thread;
+    private Thread _Thread;
     //
 
     // Game Status
     private GAMEENUMS _CurrentStatus;
     //
 
-    public enum GAMEENUMS{
+    public enum GAMEENUMS {
         STOP(),
         START(),
         END();
     }
 
     public static void main(String[] args) {
-            new Game();
+        new Game();
     }
 
 
-    public void onChange(JFrame frame, GUIS gu)
-    {
+    public void onChange(JFrame frame, GUIS gu) {
         frame.dispose();
 
-        switch (gu){
-            case GAMEGUI: _CurrentFrame = new GameGUI(_WindowWidth, _WindowHeight, "Game", this);StartGame();break;
-            case STARTGUI: _CurrentFrame = new StartGUI(_WindowWidth, _WindowHeight, "Menu", this);break;
+        switch (gu) {
+            case GAMEGUI:
+                _CurrentFrame = new GameGUI(_WindowWidth, _WindowHeight, "Game", this);
+                StartGame();
+                break;
+            case STARTGUI:
+                _CurrentFrame = new StartGUI(_WindowWidth, _WindowHeight, "Menu", this);
+                break;
         }
 
     }
@@ -86,7 +90,7 @@ public class Game extends Canvas implements Runnable {
     }
 
 
-    private void StartGame(){
+    private void StartGame() {
         this._CurrentStatus = GAMEENUMS.START;
 
         _Thread.start();
@@ -130,8 +134,8 @@ public class Game extends Canvas implements Runnable {
             }
         }
 
-        switch (_CurrentStatus){
-            case STOP :
+        switch (_CurrentStatus) {
+            case STOP:
                 try {
                     _Thread.join();
                 } catch (InterruptedException e) {
@@ -160,7 +164,6 @@ public class Game extends Canvas implements Runnable {
     private void tick() {
         _Handler.tick();
     }
-
 
 
 }

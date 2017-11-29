@@ -16,7 +16,6 @@ import java.io.IOException;
 public class StartGUI extends GUIObject {
 
 
-
     private JPanel pnButtons;
     private JLabel lbTitle;
     private JLabel lbRightPic;
