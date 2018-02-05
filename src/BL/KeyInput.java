@@ -10,37 +10,19 @@ import java.awt.event.KeyEvent;
  */
 public class KeyInput extends KeyAdapter{
 
-    private Handler handler;
+    private boolean[] keyPressed = new boolean[1024];
 
-    public KeyInput(Handler handler){
-        this.handler=handler;
+    public boolean isKeyPressed(int key) {
+        return keyPressed[key];
     }
 
-    @Override
     public void keyPressed(KeyEvent e) {
-        int key=e.getKeyCode();
-        if(e.getKeyCode()==KeyEvent.VK_RIGHT)
-        {
-            handler.setBoolRight(true);
-        }
-        if(e.getKeyCode()==KeyEvent.VK_LEFT)
-        {
-            handler.setBoolLeft(true);
-
-        }
+        int key = e.getKeyCode();
+        keyPressed[key] = true;
     }
 
-    @Override
     public void keyReleased(KeyEvent e) {
-        int key=e.getKeyCode();
-        if(e.getKeyCode()==KeyEvent.VK_RIGHT)
-        {
-           handler.setBoolRight(false);
-        }
-        if(e.getKeyCode()==KeyEvent.VK_LEFT)
-        {
-            handler.setBoolLeft(false);
-        }
-
+        int key = e.getKeyCode();
+        keyPressed[key] = false;
     }
 }

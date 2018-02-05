@@ -6,6 +6,7 @@ import handler.Handler;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 
 /**
@@ -29,6 +30,8 @@ public class Game extends Canvas implements Runnable {
     // Game Thread
     private Thread _Thread;
     //
+
+    private KeyInput keyinput;
 
     // Game Status
     private GAMEENUMS _CurrentStatus;
@@ -74,13 +77,16 @@ public class Game extends Canvas implements Runnable {
 
         // Handler
         this._Handler = new Handler();
-        _Handler.setPlayer(new Player(_WindowWidth, _WindowHeight, _Handler, 200, 200));
+        _Handler.setPlayer(new Player(_WindowWidth, _WindowHeight, _Handler, 200, 200,1));
+        _Handler.setPlayer(new Player(_WindowWidth, _WindowHeight, _Handler, 400, 400,2));
 
         // GUI
         this._CurrentFrame = new StartGUI(_WindowWidth, _WindowHeight, "Menu", this);
 
         // Listeners
-        this.addKeyListener(new KeyInput(_Handler));
+
+        keyinput = new KeyInput();
+        this.addKeyListener(keyinput);
 
         // Status
         this._CurrentStatus = GAMEENUMS.STOP;
@@ -113,7 +119,7 @@ public class Game extends Canvas implements Runnable {
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
             lastTime = now;
-            System.out.println("2ffff");
+
 
             while (delta >= 1) {
                 tick();
@@ -162,6 +168,31 @@ public class Game extends Canvas implements Runnable {
     }
 
     private void tick() {
+        if (keyinput.isKeyPressed(KeyEvent.VK_A)) {
+            _Handler.setBoolLeft1(true);
+        }else{
+            _Handler.setBoolLeft1(false);
+        }
+
+        if (keyinput.isKeyPressed(KeyEvent.VK_D)) {
+            _Handler.setBoolRight1(true);
+        }else{
+            _Handler.setBoolRight1(false);
+        }
+
+        if (keyinput.isKeyPressed(KeyEvent.VK_LEFT)) {
+            _Handler.setBoolLeft2(true);
+        }else{
+            _Handler.setBoolLeft2(false);
+        }
+
+        if (keyinput.isKeyPressed(KeyEvent.VK_RIGHT)) {
+            _Handler.setBoolRight2(true);
+        }
+        else{
+            _Handler.setBoolRight2(false);
+        }
+
         _Handler.tick();
     }
 
